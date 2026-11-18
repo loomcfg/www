@@ -1,0 +1,30 @@
+title: LoomCFG
+tagline: Human-Authored Configuration That Compiles to JSON
+description: >-
+  Loom (.loom) is a strict, human-ergonomic configuration language with
+  JSON-isomorphic evaluation, lightweight @tag types, bounded @import composition,
+  and lossless CST editing.
+url: "https://loomcfg.com"
+baseurl: ""
+repository: "loomcfg/loomcfg.com"
+
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "doc"
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md

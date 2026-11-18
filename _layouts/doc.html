@@ -1,0 +1,26 @@
+---
+layout: default
+---
+<div class="container doc-shell">
+  <aside class="doc-sidebar" aria-label="Documentation Navigation">
+    <div class="sidebar-group">
+      <div class="sidebar-title">Documentation</div>
+      <a href="{{ '/docs/quickstart/' | relative_url }}" class="sidebar-link {% if page.url contains '/quickstart' %}active{% endif %}">Quickstart</a>
+      <a href="{{ '/docs/syntax/' | relative_url }}" class="sidebar-link {% if page.url contains '/syntax' %}active{% endif %}">Syntax &amp; Types</a>
+      <a href="{{ '/docs/composition/' | relative_url }}" class="sidebar-link {% if page.url contains '/composition' %}active{% endif %}">Imports &amp; Spreads</a>
+      <a href="{{ '/docs/spec/' | relative_url }}" class="sidebar-link {% if page.url contains '/spec' %}active{% endif %}">Specification (v0.1)</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-title">Ecosystem</div>
+      <a href="{{ '/playground/' | relative_url }}" class="sidebar-link">Live Playground</a>
+      <a href="https://github.com/loomcfg/spec" target="_blank" rel="noopener" class="sidebar-link">GitHub: loomcfg/spec ↗</a>
+      <a href="https://github.com/loomcfg/loom" target="_blank" rel="noopener" class="sidebar-link">GitHub: loomcfg/loom ↗</a>
+    </div>
+  </aside>
+  <article class="doc-content prose">
+    <div class="doc-eyebrow">{{ page.eyebrow | default: "LoomCFG Docs" }}</div>
+    <h1>{{ page.title }}</h1>
+    {% if page.lead %}<p class="doc-lead">{{ page.lead }}</p>{% endif %}
+    {{ content }}
+  </article>
+</div>

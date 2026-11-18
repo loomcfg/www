@@ -1,0 +1,167 @@
+---
+layout: default
+title: LoomCFG — Human-Authored Configuration That Compiles to JSON
+---
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="badge">v0.1.0-draft • Open Specification</div>
+      <h1>Configuration woven for humans, compiled cleanly to <span class="text-accent">JSON</span>.</h1>
+      <p class="hero-lead">
+        <strong>Loom</strong> (<code>.loom</code>) eliminates YAML's implicit type traps and TOML's deep-nesting boilerplate. Write strict, comment-rich configs with lightweight <code>@tag</code> types and deterministic <code>@import</code> composition.
+      </p>
+      <div class="hero-ctas">
+        <a href="{{ '/docs/quickstart/' | relative_url }}" class="btn btn-primary">Get Started</a>
+        <a href="{{ '/playground/' | relative_url }}" class="btn btn-secondary">Try Live Playground</a>
+      </div>
+      <div class="cli-pill">
+        <code>$ loom build service.loom -o service.json</code>
+        <button type="button" class="copy-btn" data-copy="loom build service.loom -o service.json" title="Copy command">Copy</button>
+      </div>
+    </div>
+
+    <div class="hero-demo">
+      <div class="code-window">
+        <div class="window-bar">
+          <div class="window-dots"><span></span><span></span><span></span></div>
+          <div class="window-tabs">
+            <button type="button" class="tab-btn active" data-tab="loom">service.loom</button>
+            <button type="button" class="tab-btn" data-tab="json">service.json (compiled)</button>
+          </div>
+        </div>
+        <pre class="code-pane active" id="pane-loom"><code><span class="tok-com"># Typed, composable application configuration</span>
+<span class="tok-dir">@schema</span> <span class="tok-str">"./schemas/service.schema.json"</span>
+<span class="tok-dir">@import</span> <span class="tok-str">"./defaults/http.loom"</span> <span class="tok-kw">as</span> http
+
+<span class="tok-key">service</span>: {
+  <span class="tok-spread">...http.server</span>
+  <span class="tok-key">name</span>: <span class="tok-str">"billing-gateway"</span>
+  <span class="tok-key">port</span>: <span class="tok-num">8443</span>
+  <span class="tok-key">tls_enabled</span>: <span class="tok-bool">true</span>
+  <span class="tok-key">read_timeout</span>: <span class="tok-tag">@dur</span> <span class="tok-str">"15s"</span>
+  <span class="tok-key">deployed_at</span>: <span class="tok-tag">@instant</span> <span class="tok-str">"2026-11-17T21:00:00Z"</span>
+}
+
+<span class="tok-key">routes</span>: [
+  { <span class="tok-key">path</span>: <span class="tok-str">"/v1/invoices"</span>, <span class="tok-key">rate_limit</span>: <span class="tok-num">120</span> }
+  { <span class="tok-key">path</span>: <span class="tok-str">"/v1/webhooks"</span>, <span class="tok-key">rate_limit</span>: <span class="tok-num">600</span> }
+]</code></pre>
+        <pre class="code-pane" id="pane-json"><code>{
+  <span class="tok-key">"service"</span>: {
+    <span class="tok-key">"host"</span>: <span class="tok-str">"0.0.0.0"</span>,
+    <span class="tok-key">"name"</span>: <span class="tok-str">"billing-gateway"</span>,
+    <span class="tok-key">"port"</span>: <span class="tok-num">8443</span>,
+    <span class="tok-key">"tls_enabled"</span>: <span class="tok-bool">true</span>,
+    <span class="tok-key">"read_timeout"</span>: <span class="tok-str">"15s"</span>,
+    <span class="tok-key">"deployed_at"</span>: <span class="tok-str">"2026-11-17T21:00:00Z"</span>
+  },
+  <span class="tok-key">"routes"</span>: [
+    { <span class="tok-key">"path"</span>: <span class="tok-str">"/v1/invoices"</span>, <span class="tok-key">"rate_limit"</span>: <span class="tok-num">120</span> },
+    { <span class="tok-key">"path"</span>: <span class="tok-str">"/v1/webhooks"</span>, <span class="tok-key">"rate_limit"</span>: <span class="tok-num">600</span> }
+  ]
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="section-header">
+      <h2>Engineered to fix everyday config friction</h2>
+      <p>Designed from first principles for application settings, CLI tools, and deterministic DevOps manifests.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">{}</div>
+        <h3>100% JSON-Isomorphic</h3>
+        <p>Every <code>.loom</code> file evaluates to standard JSON objects, arrays, strings, numbers, booleans, and null—zero custom runtime required downstream.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">@</div>
+        <h3>Lightweight Type Tags</h3>
+        <p>Annotate durations (<code>@dur "15s"</code>), dates (<code>@date</code>), instants (<code>@instant</code>), and regexes without breaking JSON round-trip compatibility.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">...</div>
+        <h3>Bounded Composition</h3>
+        <p>Share presets via relative <code>@import</code> and shallow <code>...spread</code> overrides without Turing-complete loops, side effects, or network fetches.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">#</div>
+        <h3>Lossless CST Edits</h3>
+        <p>A Concrete Syntax Tree (CST) preserves comments, blank lines, and key ordering during both <code>loom fmt</code> and automated CLI mutations.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">""</div>
+        <h3>Zero Coercion Surprises</h3>
+        <p>Strings always require quotes. Unquoted <code>no</code>, <code>on</code>, or <code>3.10</code> will never silently morph into booleans or truncated floats.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✓</div>
+        <h3>JSON Schema Native</h3>
+        <p>Link any standard JSON Schema with <code>@schema</code> for instant IDE autocomplete, hover docs, and CI validation out of the box.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="comparison-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>How Loom compares</h2>
+      <p>Ergonomic authoring without sacrificing strictness or ecosystem compatibility.</p>
+    </div>
+    <div class="table-wrap">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th class="col-highlight">Loom (.loom)</th>
+            <th>JSON</th>
+            <th>YAML</th>
+            <th>TOML</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Comments (<code>#</code> &amp; <code>/* */</code>)</td>
+            <td class="col-highlight">Yes (preserved in CST)</td>
+            <td>No</td>
+            <td>Yes (<code>#</code> only)</td>
+            <td>Yes (<code>#</code> only)</td>
+          </tr>
+          <tr>
+            <td>Implicit type coercion traps</td>
+            <td class="col-highlight">None (syntax-typed)</td>
+            <td>None</td>
+            <td>Yes (<code>no</code>, <code>on</code>, octal)</td>
+            <td>None</td>
+          </tr>
+          <tr>
+            <td>Deeply nested arrays &amp; objects</td>
+            <td class="col-highlight">Clean braced blocks</td>
+            <td>Clean</td>
+            <td>Indentation-fragile</td>
+            <td>Verbose <code>[[a.b.c]]</code></td>
+          </tr>
+          <tr>
+            <td>Modular reuse (<code>@import</code> / spread)</td>
+            <td class="col-highlight">Built-in &amp; acyclic</td>
+            <td>No</td>
+            <td>Anchors only (same file)</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Domain types (<code>@dur</code>, <code>@instant</code>)</td>
+            <td class="col-highlight">JSON-safe tags</td>
+            <td>Plain strings only</td>
+            <td>Implicit timestamps</td>
+            <td>Native dates (non-JSON)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+---
+layout: default
+title: Interactive Loom Playground
+permalink: /playground/
+---
+<section class="playground-section">
+  <div class="container">
+    <div class="playground-header">
+      <div>
+        <div class="doc-eyebrow">Browser Compiler Preview</div>
+        <h1>Loom Playground</h1>
+        <p>Edit Loom syntax on the left to inspect live JSON compilation, resolved spreads, and tag hydration.</p>
+      </div>
+      <div class="playground-controls">
+        <select id="presetSelect" class="select-input" aria-label="Load example preset">
+          <option value="service">Web Service + Spread</option>
+          <option value="telemetry">Telemetry Pipeline</option>
+          <option value="multiline">Multiline SQL &amp; Tags</option>
+        </select>
+        <button type="button" id="formatBtn" class="btn btn-secondary">Format</button>
+        <button type="button" id="copyJsonBtn" class="btn btn-primary">Copy JSON</button>
+      </div>
+    </div>
+
+    <div class="playground-grid">
+      <div class="editor-card">
+        <div class="editor-bar">
+          <span>input.loom</span>
+          <span class="status-badge" id="parseStatus">Valid Loom</span>
+        </div>
+        <textarea id="loomInput" spellcheck="false" aria-label="Loom source input"></textarea>
+      </div>
+
+      <div class="editor-card">
+        <div class="editor-bar">
+          <span>compiled.json</span>
+          <span class="meta-label" id="compileTime">0 ms</span>
+        </div>
+        <pre id="jsonOutput" class="json-output"></pre>
+      </div>
+    </div>
+  </div>
+</section>
